@@ -568,7 +568,7 @@ namespace Katarina_By_Kornis
             {
                 var bestTarget = GetBestKillableHero(Q, DamageType.Magical, false);
                 if (bestTarget != null &&
-                    Player.GetSpellDamage(bestTarget, SpellSlot.Q) >= bestTarget.Health)
+                    Player.GetSpellDamage(bestTarget, SpellSlot.Q) >= bestTarget.Health && bestTarget.IsValidTarget(Q.Range))
                 {
                     Q.CastOnUnit(bestTarget);
                 }
@@ -578,7 +578,7 @@ namespace Katarina_By_Kornis
             {
                 var bestTarget = GetBestKillableHero(E, DamageType.Magical, false);
                 if (bestTarget != null &&
-                    Player.GetSpellDamage(bestTarget, SpellSlot.E) >= bestTarget.Health)
+                    Player.GetSpellDamage(bestTarget, SpellSlot.E) >= bestTarget.Health && bestTarget.IsValidTarget(E.Range))
                 {
                     E.CastOnUnit(bestTarget);
                 }
@@ -675,7 +675,7 @@ namespace Katarina_By_Kornis
                                 }
                                 if (daggers.Distance(target) > 450 && Player.GetSpellDamage(target, SpellSlot.E) > target.Health)
                                 {
-
+                                    
                                     E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
                                 }
                             }
@@ -685,8 +685,10 @@ namespace Katarina_By_Kornis
                                 E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
                             }
 
-
-                            Q.CastOnUnit(target);
+                            if (target.IsValidTarget(Q.Range))
+                            {
+                                Q.CastOnUnit(target);
+                            }
 
                         }
                         
@@ -707,7 +709,7 @@ namespace Katarina_By_Kornis
             {
                 return;
             }
-
+            
             switch (Menu["combo"]["combomode"].As<MenuList>().Value)
             {
                 case 0:
