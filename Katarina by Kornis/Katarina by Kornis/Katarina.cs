@@ -398,7 +398,7 @@ namespace Katarina_By_Kornis
                                                 if (!daggers.IsUnderEnemyTurret())
                                                 {
                                                     E.Cast(daggers.ServerPosition.Extend(minion.ServerPosition, 200));
-                                                    
+                                                    Console.WriteLine("test");
                                                 }
                                             }
                                             if (!Menu["farming"]["turret"].Enabled)
@@ -850,18 +850,18 @@ namespace Katarina_By_Kornis
                                         }
                                         if (daggers.Distance(Player) > E.Range)
                                         {
-                                            E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                            E.Cast(target.ServerPosition.Extend(Player.ServerPosition, 50));
                                         }
                                         if (daggers.Distance(target) > 450)
                                         {
 
-                                            E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                            E.Cast(target.ServerPosition.Extend(Player.ServerPosition, 50));
                                         }
                                     }
                                     if (dagger.Count() == 0)
                                     {
 
-                                        E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                        E.Cast(target.ServerPosition.Extend(Player.ServerPosition, 50));
                                     }
 
                                 }
@@ -1031,18 +1031,18 @@ namespace Katarina_By_Kornis
                                     }
                                     if (daggers.Distance(Player) > E.Range)
                                     {
-                                        E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                        E.Cast(target.ServerPosition.Extend(Player.ServerPosition, 50));
                                     }
                                     if (daggers.Distance(target) > 450)
                                     {
 
-                                        E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                        E.Cast(target.ServerPosition.Extend(Player.ServerPosition, 50));
                                     }
                                 }
                                 if (dagger.Count() == 0)
                                 {
 
-                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, 50));
                                 }
 
                             }
