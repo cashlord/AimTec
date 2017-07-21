@@ -17,7 +17,7 @@ namespace Katarina_By_Kornis
             if (ObjectManager.GetLocalPlayer().ChampionName != "Katarina")
                 return;
 
-            var Kassadin = new Katarina();
+            var Katarina = new Katarina();
         }
     }
 }
