@@ -1,0 +1,10 @@
+C:\Users\Meow\Desktop\LeagueTec\Katarina by Kornis\Katarina by Kornis\bin\Debug\Aimtec.dll
+C:\Users\Meow\Desktop\LeagueTec\Katarina by Kornis\Katarina by Kornis\bin\Debug\Aimtec.SDK.dll
+C:\Users\Meow\Desktop\LeagueTec\Katarina by Kornis\Katarina by Kornis\bin\Debug\NLog.dll
+C:\Users\Meow\Desktop\LeagueTec\Katarina by Kornis\Katarina by Kornis\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Meow\Desktop\LeagueTec\Katarina by Kornis\Katarina by Kornis\bin\Debug\Katarina by Kornis.exe.config
+C:\Users\Meow\Desktop\LeagueTec\Katarina by Kornis\Katarina by Kornis\bin\Debug\Katarina by Kornis.exe
+C:\Users\Meow\Desktop\LeagueTec\Katarina by Kornis\Katarina by Kornis\bin\Debug\Katarina by Kornis.pdb
+C:\Users\Meow\Desktop\LeagueTec\Katarina by Kornis\Katarina by Kornis\obj\Debug\Katarina by Kornis.exe
+C:\Users\Meow\Desktop\LeagueTec\Katarina by Kornis\Katarina by Kornis\obj\Debug\Katarina by Kornis.pdb
+C:\Users\Meow\Desktop\LeagueTec\Katarina by Kornis\Katarina by Kornis\obj\Debug\Katarina by Kornis.csprojResolveAssemblyReference.cache
