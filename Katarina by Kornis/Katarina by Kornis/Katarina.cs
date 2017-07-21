@@ -217,16 +217,16 @@ namespace Katarina_By_Kornis
             
             if (Menu["drawings"]["drawq"].Enabled)
             {
-                Render.Circle(Player.Position, Q.Range, 50, Color.CornflowerBlue);
+                Render.Circle(Player.Position, Q.Range, 40, Color.CornflowerBlue);
             }
 
             if (Menu["drawings"]["drawe"].Enabled)
             {
-                Render.Circle(Player.Position, E.Range, 50, Color.Crimson);
+                Render.Circle(Player.Position, E.Range, 40, Color.Crimson);
             }
             if (Menu["drawings"]["drawr"].Enabled)
             {
-                Render.Circle(Player.Position, R.Range, 50, Color.Crimson);
+                Render.Circle(Player.Position, R.Range, 40, Color.Crimson);
             }
             if (Menu["drawings"]["drawdagger"].Enabled)
             {
@@ -239,13 +239,13 @@ namespace Katarina_By_Kornis
 
                         if (daggers.CountEnemyHeroesInRange(450) != 0)
                         {
-                            Render.Circle(daggers.ServerPosition, 450, 100, Color.LawnGreen);
-                            Render.Circle(daggers.ServerPosition, 150, 100, Color.LawnGreen);
+                            Render.Circle(daggers.ServerPosition, 450, 40, Color.LawnGreen);
+                            Render.Circle(daggers.ServerPosition, 150, 40, Color.LawnGreen);
                         }
                         if (daggers.CountEnemyHeroesInRange(450) == 0)
                         {
-                            Render.Circle(daggers.ServerPosition, 450, 100, Color.Red);
-                            Render.Circle(daggers.ServerPosition, 150, 100, Color.Red);
+                            Render.Circle(daggers.ServerPosition, 450, 40, Color.Red);
+                            Render.Circle(daggers.ServerPosition, 150, 40, Color.Red);
                         }
                     }
                 }
