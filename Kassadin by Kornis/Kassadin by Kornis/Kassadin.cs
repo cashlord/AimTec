@@ -38,9 +38,9 @@
             E.SetSkillshot(0.3f, (float)(80f + Math.PI / 180f), 1000f, false, SkillshotType.Cone);
             R.SetSkillshot(0.25f, 150, 1500, false, SkillshotType.Circle);
             if (Player.SpellBook.GetSpell(SpellSlot.Summoner1).SpellData.Name == "SummonerFlash")
-                Flash = new Spell(SpellSlot.Summoner1, 700);
+                Flash = new Spell(SpellSlot.Summoner1, 450);
             if (Player.SpellBook.GetSpell(SpellSlot.Summoner2).SpellData.Name == "SummonerFlash")
-                Flash = new Spell(SpellSlot.Summoner2, 700);
+                Flash = new Spell(SpellSlot.Summoner2, 450);
         }
 
         public Kassadin()
