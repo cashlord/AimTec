@@ -398,7 +398,7 @@ namespace Katarina_By_Kornis
                                                 if (!daggers.IsUnderEnemyTurret())
                                                 {
                                                     E.Cast(daggers.ServerPosition.Extend(minion.ServerPosition, 200));
-                                                    Console.WriteLine("test");
+                                                    
                                                 }
                                             }
                                             if (!Menu["farming"]["turret"].Enabled)
@@ -650,6 +650,47 @@ namespace Katarina_By_Kornis
             {
                 if (Player.HasBuff("katarinarsound"))
                 {
+                    if (target.Distance(Player) >= R.Range - 100)
+                    {
+                        var dagger = ObjectManager.Get<Obj_AI_Base>()
+                            .Where(a => a.Name == "HiddenMinion" && a.IsValid && !a.IsDead);
+                        foreach (var daggers in GameObjects.AllGameObjects)
+
+                        {
+                            if (daggers.Name == "HiddenMinion" && !daggers.IsDead && daggers.IsValid)
+                            {
+                                if (target.Distance(daggers) < 450 &&
+                                    target.IsValidTarget(E.Range) && E.Ready)
+
+                                {
+
+                                    E.Cast(daggers.ServerPosition.Extend(target.ServerPosition, 200));
+
+
+                                }
+                                if (daggers.Distance(Player) > E.Range)
+                                {
+                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                }
+                                if (daggers.Distance(target) > 450)
+                                {
+
+                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                }
+                            }
+                            if (dagger.Count() == 0)
+                            {
+
+                                E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                            }
+
+                            if (target.IsValidTarget(Q.Range))
+                            {
+                                Q.CastOnUnit(target);
+                            }
+
+                        }
+                    }
                     if (Player.GetSpellDamage(target, SpellSlot.Q) + Player.GetSpellDamage(target, SpellSlot.E) >=
                         target.Health)
                     {
@@ -796,7 +837,7 @@ namespace Katarina_By_Kornis
                             case 0:
                                 if (R.Ready && target.IsValidTarget(R.Range - 50))
                                 {
-                                    if (target != null && Player.CountEnemyHeroesInRange(R.Range - 50) >= hitR)
+                                    if (target != null && Player.CountEnemyHeroesInRange(R.Range - 150) >= hitR)
                                     {
                                         if (target.Health > meow && !Q.Ready)
                                         {
@@ -806,7 +847,7 @@ namespace Katarina_By_Kornis
                                 }
                                 break;
                             case 1:
-                                if (R.Ready && target.IsValidTarget(R.Range - 50))
+                                if (R.Ready && target.IsValidTarget(R.Range - 150))
                                 {
                                     if (target != null && target.Health <=
                                         Player.GetSpellDamage(target, SpellSlot.Q) +
@@ -905,7 +946,7 @@ namespace Katarina_By_Kornis
                         switch (Menu["combo"]["rset"]["rmode"].As<MenuList>().Value)
                         {
                             case 0:
-                                if (R.Ready && target.IsValidTarget(R.Range - 50))
+                                if (R.Ready && target.IsValidTarget(R.Range - 150))
                                 {
                                     if (target != null && Player.CountEnemyHeroesInRange(R.Range - 50) >= hitR)
                                     {
@@ -917,7 +958,7 @@ namespace Katarina_By_Kornis
                                 }
                                 break;
                             case 1:
-                                if (R.Ready && target.IsValidTarget(R.Range - 50))
+                                if (R.Ready && target.IsValidTarget(R.Range - 150))
                                 {
                                     if (target != null && target.Health <=
                                         Player.GetSpellDamage(target, SpellSlot.Q) +
