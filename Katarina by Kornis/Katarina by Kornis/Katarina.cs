@@ -642,111 +642,108 @@ namespace Katarina_By_Kornis
             float dagggggggers = Menu["combo"]["rset"]["dagger"].As<MenuSlider>().Value;
             float meow = Menu["combo"]["rset"]["waster"].As<MenuSlider>().Value;
             var target = GetBestEnemyHeroTargetInRange(Q.Range);
-            if (!target.IsValidTarget())
-            {
-                return;
-            }
-            if (ksR)
-            {
-                if (Player.HasBuff("katarinarsound"))
-                {
-                    if (target.Distance(Player) >= R.Range - 100)
-                    {
-                        var dagger = ObjectManager.Get<Obj_AI_Base>()
-                            .Where(a => a.Name == "HiddenMinion" && a.IsValid && !a.IsDead);
-                        foreach (var daggers in GameObjects.AllGameObjects)
-
-                        {
-                            if (daggers.Name == "HiddenMinion" && !daggers.IsDead && daggers.IsValid)
-                            {
-                                if (target.Distance(daggers) < 450 &&
-                                    target.IsValidTarget(E.Range) && E.Ready)
-
-                                {
-
-                                    E.Cast(daggers.ServerPosition.Extend(target.ServerPosition, 200));
-
-
-                                }
-                                if (daggers.Distance(Player) > E.Range)
-                                {
-                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
-                                }
-                                if (daggers.Distance(target) > 450)
-                                {
-
-                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
-                                }
-                            }
-                            if (dagger.Count() == 0)
-                            {
-
-                                E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
-                            }
-
-                            if (target.IsValidTarget(Q.Range))
-                            {
-                                Q.CastOnUnit(target);
-                            }
-
-                        }
-                    }
-                    if (Player.GetSpellDamage(target, SpellSlot.Q) + Player.GetSpellDamage(target, SpellSlot.E) >=
-                        target.Health)
-                    {
-                        
-                        var dagger = ObjectManager.Get<Obj_AI_Base>()
-                            .Where(a => a.Name == "HiddenMinion" && a.IsValid && !a.IsDead);
-                        foreach (var daggers in GameObjects.AllGameObjects)
-
-                        {
-                            if (daggers.Name == "HiddenMinion" && !daggers.IsDead && daggers.IsValid)
-                            {
-                                if (target.Distance(daggers) < 450 &&
-                                    target.IsValidTarget(E.Range) && E.Ready)
-                                
-                                {
-
-                                    E.Cast(daggers.ServerPosition.Extend(target.ServerPosition, 200));
-
-
-                                }
-                                if (daggers.Distance(Player) > E.Range)
-                                {
-                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
-                                }
-                                if (daggers.Distance(target) > 450)
-                                {
-                                    
-                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
-                                }
-                            }
-                            if (dagger.Count() == 0)
-                            {
-
-                                E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
-                            }
-
-                            if (target.IsValidTarget(Q.Range))
-                            {
-                                Q.CastOnUnit(target);
-                            }
-
-                        }
-                        
-                    }
-                }
-            }
             if (cancel)
             {
                 if (Player.HasBuff("katarinarsound"))
                 {
                     if (Player.CountEnemyHeroesInRange(R.Range) == 0)
                     {
+                        Console.WriteLine("test");
                         Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
                     }
                 }
             }
+            if (ksR)
+            {
+                if (Player.HasBuff("katarinarsound"))
+                {
+                    if (target.Distance(Player) >= R.Range - 100 && target != null)
+                    {
+                        Console.WriteLine("aha");
+                        var dagger = ObjectManager.Get<Obj_AI_Base>()
+                            .Where(a => a.Name == "HiddenMinion" && a.IsValid && !a.IsDead);
+                        foreach (var daggers in GameObjects.AllGameObjects)
+
+                        {
+                            if (daggers.Name == "HiddenMinion" && !daggers.IsDead && daggers.IsValid)
+                            {
+                                if (target.Distance(daggers) < 450 &&
+                                    target.IsValidTarget(E.Range) && E.Ready)
+
+                                {
+
+                                    E.Cast(daggers.ServerPosition.Extend(target.ServerPosition, 200));
+
+
+                                }
+                                if (daggers.Distance(Player) > E.Range)
+                                {
+                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                }
+                                if (daggers.Distance(target) > 450)
+                                {
+
+                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                }
+                            }
+                            if (dagger.Count() == 0)
+                            {
+
+                                E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                            }
+                        }
+                    }
+                    if (Player.GetSpellDamage(target, SpellSlot.Q) + Player.GetSpellDamage(target, SpellSlot.E) >=
+                        target.Health)
+                    {
+
+                        var dagger = ObjectManager.Get<Obj_AI_Base>()
+                            .Where(a => a.Name == "HiddenMinion" && a.IsValid && !a.IsDead);
+                        foreach (var daggers in GameObjects.AllGameObjects)
+
+                        {
+                            if (daggers.Name == "HiddenMinion" && !daggers.IsDead && daggers.IsValid)
+                            {
+                                if (target.Distance(daggers) < 450 &&
+                                    target.IsValidTarget(E.Range) && E.Ready)
+
+                                {
+
+                                    E.Cast(daggers.ServerPosition.Extend(target.ServerPosition, 200));
+
+
+                                }
+                                if (daggers.Distance(Player) > E.Range)
+                                {
+                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                }
+                                if (daggers.Distance(target) > 450)
+                                {
+
+                                    E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                                }
+                            }
+                            if (dagger.Count() == 0)
+                            {
+
+                                E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
+                            }
+
+                            if (target.IsValidTarget(Q.Range))
+                            {
+                                Q.CastOnUnit(target);
+                            }
+
+                        }
+
+                    }
+                }
+            }
+            if (!target.IsValidTarget())
+            {
+                return;
+            }
+            
             if (Player.HasBuff("katarinarsound"))
             {
                 return;
