@@ -653,6 +653,7 @@ namespace Katarina_By_Kornis
                     if (Player.GetSpellDamage(target, SpellSlot.Q) + Player.GetSpellDamage(target, SpellSlot.E) >=
                         target.Health)
                     {
+                        
                         var dagger = ObjectManager.Get<Obj_AI_Base>()
                             .Where(a => a.Name == "HiddenMinion" && a.IsValid && !a.IsDead);
                         foreach (var daggers in GameObjects.AllGameObjects)
@@ -661,25 +662,25 @@ namespace Katarina_By_Kornis
                             if (daggers.Name == "HiddenMinion" && !daggers.IsDead && daggers.IsValid)
                             {
                                 if (target.Distance(daggers) < 450 &&
-                                    target.IsValidTarget(E.Range) && (Passive(target) >= target.Health && E.Ready)
-                                )
+                                    target.IsValidTarget(E.Range) && E.Ready)
+                                
                                 {
 
                                     E.Cast(daggers.ServerPosition.Extend(target.ServerPosition, 200));
 
 
                                 }
-                                if (daggers.Distance(Player) > E.Range && Player.GetSpellDamage(target, SpellSlot.E) > target.Health)
+                                if (daggers.Distance(Player) > E.Range)
                                 {
                                     E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
                                 }
-                                if (daggers.Distance(target) > 450 && Player.GetSpellDamage(target, SpellSlot.E) > target.Health)
+                                if (daggers.Distance(target) > 450)
                                 {
                                     
                                     E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
                                 }
                             }
-                            if (dagger.Count() == 0 && Player.GetSpellDamage(target, SpellSlot.E) > target.Health)
+                            if (dagger.Count() == 0)
                             {
 
                                 E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
