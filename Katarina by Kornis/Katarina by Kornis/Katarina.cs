@@ -443,18 +443,13 @@ namespace Katarina_By_Kornis
 
         public static List<Obj_AI_Minion> GetGenericJungleMinionsTargetsInRange(float range)
         {
-            return GameObjects.Jungle.Concat(GameObjects.JungleSmall).Where(m => m.IsValidTarget(range)).ToList();
+          return GameObjects.Jungle.Where(m => !GameObjects.JungleSmall.Contains(m) && m.IsValidTarget(range)).ToList();
         }
 
         private void Jungle()
         {
-            foreach (var jungleTarget in GameObjects.Jungle.Where(m => m.IsValidTarget(Q.Range)).ToList())
+            foreach (var jungleTarget in GetGenericJungleMinionsTargetsInRange(Q.Range))
             {
-                if (!jungleTarget.IsValidTarget() ||
-                    !GetGenericJungleMinionsTargets().Contains(jungleTarget))
-                {
-                    return;
-                }
                 bool useQ = Menu["farming"]["useq"].Enabled;
                 bool useW = Menu["farming"]["usew"].Enabled;
 
@@ -462,7 +457,7 @@ namespace Katarina_By_Kornis
                 {
                     Q.CastOnUnit(jungleTarget);
                 }
-                if (useW && jungleTarget.IsValidTarget(250))
+                if (useW && jungleTarget.IsValidTarget(250f))
                 {
                     W.Cast();
                 }
@@ -620,12 +615,18 @@ namespace Katarina_By_Kornis
         {
             var ts = TargetSelector.Implementation;
             var target = ts.GetTarget(range);
-            if (target != null && target.IsValidTarget())
+            if (target != null && target.IsValidTarget() && !Invulnerable.Check(target))
             {
                 return target;
             }
 
-            return ts.GetOrderedTargets(range).FirstOrDefault(t => target.IsValidTarget());
+            var firstTarget = ts.GetOrderedTargets(range).FirstOrDefault(t => t.IsValidTarget() && !Invulnerable.Check(t));
+            if (firstTarget != null)
+            {
+                return firstTarget;
+            }
+
+            return null;
         }
 
         private void OnCombo()
