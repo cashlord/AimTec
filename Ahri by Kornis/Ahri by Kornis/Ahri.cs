@@ -39,8 +39,8 @@ namespace Ahri_By_Kornis
             W = new Spell(SpellSlot.W, 700);
             E = new Spell(SpellSlot.E, 975);
             R = new Spell(SpellSlot.R, 600);
-            Q.SetSkillshot(0.25f, 90f, 1700f, false, SkillshotType.Line);
-            E.SetSkillshot(0.25f, 60f, 1600f, true, SkillshotType.Line);
+            Q.SetSkillshot(0.25f, 90f, 1500f, false, SkillshotType.Line);
+            E.SetSkillshot(0.25f, 60f, 1400f, true, SkillshotType.Line);
             if (Player.SpellBook.GetSpell(SpellSlot.Summoner1).SpellData.Name == "SummonerFlash")
                 Flash = new Spell(SpellSlot.Summoner1, 425);
             if (Player.SpellBook.GetSpell(SpellSlot.Summoner2).SpellData.Name == "SummonerFlash")
@@ -165,7 +165,7 @@ namespace Ahri_By_Kornis
             }
             if (Menu["drawings"]["draww"].Enabled)
             {
-                Render.Circle(Player.Position, W.Range, 40, Color.Crimson);
+                Render.Circle(Player.Position, Menu["combo"]["rangew"].As<MenuSlider>().Value, 40, Color.Crimson);
             }
             if (Menu["drawings"]["drawe"].Enabled)
             {
@@ -203,11 +203,11 @@ namespace Ahri_By_Kornis
                                                      Player.GetSpellDamage(unit, SpellSlot.Q) +
                                                      Player.GetSpellDamage(unit, SpellSlot.E) +
                                                      Player.GetSpellDamage(unit, SpellSlot.W) +
-                                                     Player.GetSpellDamage(unit, SpellSlot.R) * 2
+                                                     Player.GetSpellDamage(unit, SpellSlot.R) * 3
                                              ? width * ((unit.Health - Player.GetSpellDamage(unit, SpellSlot.Q) +
                                                          Player.GetSpellDamage(unit, SpellSlot.E) +
                                                          Player.GetSpellDamage(unit, SpellSlot.W) +
-                                                         Player.GetSpellDamage(unit, SpellSlot.R) * 2) /
+                                                         Player.GetSpellDamage(unit, SpellSlot.R) * 3) /
                                                         unit.MaxHealth * 100 / 100)
                                              : 0));
 
@@ -215,7 +215,7 @@ namespace Ahri_By_Kornis
                                 unit.Health < Player.GetSpellDamage(unit, SpellSlot.Q) +
                                 Player.GetSpellDamage(unit, SpellSlot.W) +
                                 Player.GetSpellDamage(unit, SpellSlot.E) +
-                                Player.GetSpellDamage(unit, SpellSlot.R) * 2
+                                Player.GetSpellDamage(unit, SpellSlot.R) * 3
                                     ? Color.GreenYellow
                                     : Color.Orange);
 
@@ -708,7 +708,7 @@ namespace Ahri_By_Kornis
                     Q.Cast(target);
                 }
             }
-            if (W.Ready && useW && target.IsValidTarget(W.Range))
+            if (W.Ready && useW && target.IsValidTarget(Menu["combo"]["rangew"].As<MenuSlider>().Value))
             {
 
                 if (target != null)
