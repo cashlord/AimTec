@@ -273,6 +273,27 @@ namespace Ahri_By_Kornis
                 }
 
             }
+
+        }
+
+        public static List<Obj_AI_Minion> GetAllGenericMinionsTargets()
+        {
+            return GetAllGenericMinionsTargetsInRange(float.MaxValue);
+        }
+
+        public static List<Obj_AI_Minion> GetAllGenericMinionsTargetsInRange(float range)
+        {
+            return GetEnemyLaneMinionsTargetsInRange(range).Concat(GetGenericJungleMinionsTargetsInRange(range)).ToList();
+        }
+
+        public static List<Obj_AI_Base> GetAllGenericUnitTargets()
+        {
+            return GetAllGenericUnitTargetsInRange(float.MaxValue);
+        }
+
+        public static List<Obj_AI_Base> GetAllGenericUnitTargetsInRange(float range)
+        {
+            return GameObjects.EnemyHeroes.Where(h => h.IsValidTarget(range)).Concat<Obj_AI_Base>(GetAllGenericMinionsTargetsInRange(range)).ToList();
         }
 
         private void FlashE()
@@ -288,6 +309,15 @@ namespace Ahri_By_Kornis
                         if (target.Distance(Player) > E.Range - 100)
                         {
                             var meow = E.GetPrediction(target);
+                            var collisions =
+                                (IList<Obj_AI_Base>) E.GetPrediction(target).CollisionObjects;
+                            if (collisions.Any())
+                            {
+                                if (collisions.All(c => GetAllGenericUnitTargets().Contains(c)))
+                                {
+                                    return;
+                                }
+                            }
                             if (E.Cast(meow.CastPosition))
                             {
                                 DelayAction.Queue(200, () =>
@@ -300,6 +330,8 @@ namespace Ahri_By_Kornis
                 }
             }
         }
+
+
 
         public static List<Obj_AI_Minion> GetEnemyLaneMinionsTargets()
         {
