@@ -37,7 +37,7 @@ namespace Ahri_By_Kornis
         {
             Q = new Spell(SpellSlot.Q, 880);
             W = new Spell(SpellSlot.W, 700);
-            E = new Spell(SpellSlot.E, 975);
+            E = new Spell(SpellSlot.E, 900);
             R = new Spell(SpellSlot.R, 600);
             Q.SetSkillshot(0.25f, 70f, 1500f, false, SkillshotType.Line);
             E.SetSkillshot(0.25f, 50f, 1000f, true, SkillshotType.Line, false, HitChance.High);
@@ -742,7 +742,7 @@ namespace Ahri_By_Kornis
                         Q.Cast(target);
                     }
                 }
-                if (W.Ready && useW && target.IsValidTarget(W.Range))
+                if (W.Ready && useW && target.IsValidTarget(W.Range-100))
 
                 {
                     if (target != null)
