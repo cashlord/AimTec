@@ -117,6 +117,7 @@ namespace Ahri_By_Kornis
                 DrawMenu.Add(new MenuBool("drawr", "Draw R Range"));
                 DrawMenu.Add(new MenuBool("drawflash", "Draw E-Flash Range"));
                 DrawMenu.Add(new MenuBool("drawdamage", "Draw Damage"));
+                DrawMenu.Add(new MenuBool("drawtoggle", "Draw Toggle"));
             }
             Menu.Add(DrawMenu);
             var FleeMenu = new Menu("flee", "Flee");
@@ -151,13 +152,18 @@ namespace Ahri_By_Kornis
             var heropos = Render.WorldToScreen(Player.Position, out maybeworks);
             var xaOffset = (int)maybeworks.X;
             var yaOffset = (int)maybeworks.Y;
-            if (Menu["combo"]["rset"]["under"].Enabled)
+            if (Menu["drawings"]["drawtoggle"].Enabled)
             {
-                Render.Text(xaOffset - 50, yaOffset + 10, Color.HotPink, "Under-Turret: ON", RenderTextFlags.VerticalCenter);
-            }
-            if (!Menu["combo"]["rset"]["under"].Enabled)
-            {
-                Render.Text(xaOffset - 50, yaOffset + 10, Color.HotPink, "Under-Turret: OFF", RenderTextFlags.VerticalCenter);
+                if (Menu["combo"]["rset"]["under"].Enabled)
+                {
+                    Render.Text(xaOffset - 50, yaOffset + 10, Color.HotPink, "Under-Turret: ON",
+                        RenderTextFlags.VerticalCenter);
+                }
+                if (!Menu["combo"]["rset"]["under"].Enabled)
+                {
+                    Render.Text(xaOffset - 50, yaOffset + 10, Color.HotPink, "Under-Turret: OFF",
+                        RenderTextFlags.VerticalCenter);
+                }
             }
             if (Menu["drawings"]["drawq"].Enabled)
             {
