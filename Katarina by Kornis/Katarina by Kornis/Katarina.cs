@@ -649,7 +649,7 @@ namespace Katarina_By_Kornis
                 {
                     if (Player.CountEnemyHeroesInRange(R.Range) == 0)
                     {
-                        Console.WriteLine("test");
+                      
                         Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
                     }
                 }
@@ -660,7 +660,7 @@ namespace Katarina_By_Kornis
                 {
                     if (target.Distance(Player) >= R.Range - 100 && target != null)
                     {
-                        Console.WriteLine("aha");
+                       
                         var dagger = ObjectManager.Get<Obj_AI_Base>()
                             .Where(a => a.Name == "HiddenMinion" && a.IsValid && !a.IsDead);
                         foreach (var daggers in GameObjects.AllGameObjects)
