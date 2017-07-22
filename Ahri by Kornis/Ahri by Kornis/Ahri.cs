@@ -39,8 +39,8 @@ namespace Ahri_By_Kornis
             W = new Spell(SpellSlot.W, 700);
             E = new Spell(SpellSlot.E, 975);
             R = new Spell(SpellSlot.R, 600);
-            Q.SetSkillshot(0.25f, 90f, 1500f, false, SkillshotType.Line);
-            E.SetSkillshot(0.25f, 60f, 1400f, true, SkillshotType.Line);
+            Q.SetSkillshot(0.25f, 70f, 1500f, false, SkillshotType.Line);
+            E.SetSkillshot(0.25f, 50f, 1000f, true, SkillshotType.Line, false, HitChance.High);
             if (Player.SpellBook.GetSpell(SpellSlot.Summoner1).SpellData.Name == "SummonerFlash")
                 Flash = new Spell(SpellSlot.Summoner1, 425);
             if (Player.SpellBook.GetSpell(SpellSlot.Summoner2).SpellData.Name == "SummonerFlash")
@@ -183,7 +183,7 @@ namespace Ahri_By_Kornis
             {
 
                 ObjectManager.Get<Obj_AI_Base>()
-                    .Where(h => h is Obj_AI_Hero && h.IsValidTarget() && h.IsValidTarget(Q.Range + R.Range))
+                    .Where(h => h is Obj_AI_Hero && h.IsValidTarget() && h.IsValidTarget(Q.Range*2))
                     .ToList()
                     .ForEach(
                         unit =>
@@ -334,19 +334,13 @@ namespace Ahri_By_Kornis
 
         public static List<Obj_AI_Minion> GetGenericJungleMinionsTargetsInRange(float range)
         {
-            return GameObjects.Jungle.Where(m => !GameObjects.JungleSmall.Contains(m) && m.IsValidTarget(range))
-                .ToList();
+            return GameObjects.Jungle.Where(m => !GameObjects.JungleSmall.Contains(m) && m.IsValidTarget(range)).ToList();
         }
 
         private void Jungle()
         {
-            foreach (var jungleTarget in GameObjects.Jungle.Where(m => m.IsValidTarget(Q.Range)).ToList())
+            foreach (var jungleTarget in GetGenericJungleMinionsTargetsInRange(Q.Range))
             {
-                if (!jungleTarget.IsValidTarget() ||
-                    !GetGenericJungleMinionsTargets().Contains(jungleTarget))
-                {
-                    return;
-                }
                 bool useQ = Menu["farming"]["jungle"]["useq"].Enabled;
                 bool useW = Menu["farming"]["jungle"]["usew"].Enabled;
                 float manapercent = Menu["farming"]["jungle"]["mana"].As<MenuSlider>().Value;
