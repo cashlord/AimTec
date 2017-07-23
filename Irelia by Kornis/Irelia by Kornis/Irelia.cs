@@ -29,7 +29,7 @@ namespace Irelia_By_Kornis
 
         public static Orbwalker Orbwalker = new Orbwalker();
 
-        public static Obj_AI_Hero Player = ObjectManager.GetLocalPlayer();
+        public static Obj_AI_Hero Player => ObjectManager.GetLocalPlayer();
 
         public static Spell Q, W, E, R, Flash;
 
@@ -212,14 +212,14 @@ namespace Irelia_By_Kornis
                                                      Player.GetSpellDamage(unit, SpellSlot.E) +
                                                      Player.GetSpellDamage(unit, SpellSlot.W) +
                                                      Player.GetSpellDamage(unit, SpellSlot.R) * 3
-                                             ? width * ((unit.Health - Player.GetSpellDamage(unit, SpellSlot.Q) +
+                                             ? width * ((unit.Health - (Player.GetSpellDamage(unit, SpellSlot.Q) +
                                                          Player.GetSpellDamage(unit, SpellSlot.E) +
                                                          Player.GetSpellDamage(unit, SpellSlot.W) +
-                                                         Player.GetSpellDamage(unit, SpellSlot.R) * 3) /
+                                                         Player.GetSpellDamage(unit, SpellSlot.R) * 3)) /
                                                         unit.MaxHealth * 100 / 100)
                                              : 0));
 
-                            Render.Line(drawStartXPos, barPos.Y, drawEndXPos, barPos.Y, 5, true,
+                            Render.Line(drawStartXPos, barPos.Y, drawEndXPos, barPos.Y, 8, true,
                                 unit.Health < Player.GetSpellDamage(unit, SpellSlot.Q) +
                                 Player.GetSpellDamage(unit, SpellSlot.W) +
                                 Player.GetSpellDamage(unit, SpellSlot.E) +

@@ -1,0 +1,10 @@
+C:\Users\Meow\Desktop\LeagueTec\Irelia by Kornis\Irelia by Kornis\bin\Debug\Irelia by Kornis.exe.config
+C:\Users\Meow\Desktop\LeagueTec\Irelia by Kornis\Irelia by Kornis\bin\Debug\Irelia by Kornis.exe
+C:\Users\Meow\Desktop\LeagueTec\Irelia by Kornis\Irelia by Kornis\bin\Debug\Irelia by Kornis.pdb
+C:\Users\Meow\Desktop\LeagueTec\Irelia by Kornis\Irelia by Kornis\bin\Debug\Aimtec.dll
+C:\Users\Meow\Desktop\LeagueTec\Irelia by Kornis\Irelia by Kornis\bin\Debug\Aimtec.SDK.dll
+C:\Users\Meow\Desktop\LeagueTec\Irelia by Kornis\Irelia by Kornis\bin\Debug\NLog.dll
+C:\Users\Meow\Desktop\LeagueTec\Irelia by Kornis\Irelia by Kornis\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Meow\Desktop\LeagueTec\Irelia by Kornis\Irelia by Kornis\obj\Debug\Irelia by Kornis.csprojResolveAssemblyReference.cache
+C:\Users\Meow\Desktop\LeagueTec\Irelia by Kornis\Irelia by Kornis\obj\Debug\Irelia by Kornis.exe
+C:\Users\Meow\Desktop\LeagueTec\Irelia by Kornis\Irelia by Kornis\obj\Debug\Irelia by Kornis.pdb
