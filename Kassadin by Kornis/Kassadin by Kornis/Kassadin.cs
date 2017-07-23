@@ -25,7 +25,7 @@
 
         public static Orbwalker Orbwalker = new Orbwalker();
 
-        public static Obj_AI_Hero Player = ObjectManager.GetLocalPlayer();
+        public static Obj_AI_Hero Player => ObjectManager.GetLocalPlayer();
 
         public static Spell Q, W, E, R, Flash;
         public void LoadSpells()
@@ -160,9 +160,9 @@
             }
             if (Menu["drawings"]["drawDamage"].Enabled)
             {
-                
+
                 ObjectManager.Get<Obj_AI_Base>()
-                    .Where(h => h is Obj_AI_Hero && h.IsValidTarget() && h.IsValidTarget(Q.Range+R.Range))
+                    .Where(h => h is Obj_AI_Hero && h.IsValidTarget() && h.IsValidTarget(Q.Range + R.Range))
                     .ToList()
                     .ForEach(
                         unit =>
@@ -179,11 +179,11 @@
 
                             var drawEndXPos = barPos.X + width * (unit.HealthPercent() / 100);
                             var drawStartXPos = (float)(barPos.X + (unit.Health > Player.GetSpellDamage(unit, SpellSlot.Q) + Player.GetSpellDamage(unit, SpellSlot.E) + Player.GetSpellDamage(unit, SpellSlot.R) + Player.GetSpellDamage(unit, SpellSlot.W)
-                                                            ? width * ((unit.Health - Player.GetSpellDamage(unit, SpellSlot.Q) + Player.GetSpellDamage(unit, SpellSlot.E) + Player.GetSpellDamage(unit, SpellSlot.R) + Player.GetSpellDamage(unit, SpellSlot.W)) / unit.MaxHealth * 100 / 100)
+                                                            ? width * ((unit.Health - (Player.GetSpellDamage(unit, SpellSlot.Q) + Player.GetSpellDamage(unit, SpellSlot.E) + Player.GetSpellDamage(unit, SpellSlot.R) + Player.GetSpellDamage(unit, SpellSlot.W))) / unit.MaxHealth * 100 / 100)
                                                             : 0));
 
                             Render.Line(drawStartXPos, barPos.Y, drawEndXPos, barPos.Y, height, true, unit.Health < Player.GetSpellDamage(unit, SpellSlot.Q) + Player.GetSpellDamage(unit, SpellSlot.E) + Player.GetSpellDamage(unit, SpellSlot.R) + Player.GetSpellDamage(unit, SpellSlot.W) ? Color.GreenYellow : Color.Orange);
-                            
+
                         });
             }
         }
