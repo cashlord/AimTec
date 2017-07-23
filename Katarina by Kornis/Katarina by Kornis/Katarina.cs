@@ -29,7 +29,7 @@ namespace Katarina_By_Kornis
 
         public static Orbwalker Orbwalker = new Orbwalker();
 
-        public static Obj_AI_Hero Player = ObjectManager.GetLocalPlayer();
+        public static Obj_AI_Hero Player => ObjectManager.GetLocalPlayer();
 
         public static Spell Q, W, E, R;
 
@@ -285,11 +285,11 @@ namespace Katarina_By_Kornis
                                                      (GetR(unit) *
                                                       Menu["combo"]["rset"]["dagger"].As<MenuSlider>().Value) +
                                                      Passive(unit)
-                                             ? width * ((unit.Health - Player.GetSpellDamage(unit, SpellSlot.Q) +
+                                             ? width * ((unit.Health - (Player.GetSpellDamage(unit, SpellSlot.Q) +
                                                          Player.GetSpellDamage(unit, SpellSlot.E) +
                                                          (GetR(unit) *
                                                           Menu["combo"]["rset"]["dagger"].As<MenuSlider>().Value) +
-                                                         Passive(unit)) / unit.MaxHealth * 100 / 100)
+                                                         Passive(unit))) / unit.MaxHealth * 100 / 100)
                                              : 0));
 
                             Render.Line(drawStartXPos, barPos.Y, drawEndXPos, barPos.Y, 8, true,
