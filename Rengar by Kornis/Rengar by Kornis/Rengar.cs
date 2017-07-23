@@ -29,7 +29,7 @@ namespace Rengar_By_Kornis
 
         public static Orbwalker Orbwalker = new Orbwalker();
 
-        public static Obj_AI_Hero Player = ObjectManager.GetLocalPlayer();
+        public static Obj_AI_Hero Player => ObjectManager.GetLocalPlayer();
 
         public static Spell Q, W, E, Smites;
 
@@ -440,7 +440,10 @@ namespace Rengar_By_Kornis
         {
             foreach (var minion in GameObjects.Jungle.Where(m => m.IsValidTarget(Q.Range)).ToList())
             {
-
+                if (!minion.IsValidTarget() || !minion.IsValidSpellTarget())
+                {
+                    return;
+                }
                 bool stacks = Menu["farming"]["jungle"]["savestacks"].Enabled;
                 bool useQ = Menu["farming"]["jungle"]["useq"].Enabled;
                 bool useW = Menu["farming"]["jungle"]["usew"].Enabled;
