@@ -1,0 +1,9 @@
+C:\Users\Meow\Desktop\LeagueTec\Rengar by Kornis\Rengar by Kornis\bin\Debug\Rengar by Kornis.exe.config
+C:\Users\Meow\Desktop\LeagueTec\Rengar by Kornis\Rengar by Kornis\bin\Debug\Rengar by Kornis.exe
+C:\Users\Meow\Desktop\LeagueTec\Rengar by Kornis\Rengar by Kornis\bin\Debug\Rengar by Kornis.pdb
+C:\Users\Meow\Desktop\LeagueTec\Rengar by Kornis\Rengar by Kornis\bin\Debug\Aimtec.dll
+C:\Users\Meow\Desktop\LeagueTec\Rengar by Kornis\Rengar by Kornis\bin\Debug\Aimtec.SDK.dll
+C:\Users\Meow\Desktop\LeagueTec\Rengar by Kornis\Rengar by Kornis\bin\Debug\NLog.dll
+C:\Users\Meow\Desktop\LeagueTec\Rengar by Kornis\Rengar by Kornis\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Meow\Desktop\LeagueTec\Rengar by Kornis\Rengar by Kornis\obj\Debug\Rengar by Kornis.exe
+C:\Users\Meow\Desktop\LeagueTec\Rengar by Kornis\Rengar by Kornis\obj\Debug\Rengar by Kornis.pdb
