@@ -145,6 +145,14 @@ namespace Katarina_By_Kornis
             {
                 timeW = Game.TickCount + 1200;
             }
+            if (sender.IsMe)
+            {
+                if (args.Slot != SpellSlot.R && Player.HasBuff("katarinarsound"))
+                {
+                    
+                    args.Process = false;
+                }
+            }
         }
 
         static double GetR(Obj_AI_Base target)
@@ -169,8 +177,7 @@ namespace Katarina_By_Kornis
             return damage;
 
         }
-
-        public static double Passive(Obj_AI_Base target)
+                public static double Passive(Obj_AI_Base target)
         {
             double dmg = 0;
             double yay = 0;
@@ -549,7 +556,10 @@ namespace Katarina_By_Kornis
                             Passive(bestTarget) >= bestTarget.Health && bestTarget.Distance(daggers) < 450 &&
                             bestTarget.IsValidTarget(E.Range))
                         {
-
+                            if (Player.HasBuff("katarinarsound"))
+                            {
+                                Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
+                            }
                             E.Cast(bestTarget.ServerPosition.Extend(daggers.ServerPosition, 200));
 
 
@@ -565,6 +575,10 @@ namespace Katarina_By_Kornis
                 if (bestTarget != null &&
                     Player.GetSpellDamage(bestTarget, SpellSlot.Q) >= bestTarget.Health && bestTarget.IsValidTarget(Q.Range))
                 {
+                    if (Player.HasBuff("katarinarsound"))
+                    {
+                        Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
+                    }
                     Q.CastOnUnit(bestTarget);
                 }
             }
@@ -575,6 +589,10 @@ namespace Katarina_By_Kornis
                 if (bestTarget != null &&
                     Player.GetSpellDamage(bestTarget, SpellSlot.E) >= bestTarget.Health && bestTarget.IsValidTarget(E.Range))
                 {
+                    if (Player.HasBuff("katarinarsound"))
+                    {
+                        Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
+                    }
                     E.CastOnUnit(bestTarget);
                 }
             }
@@ -592,7 +610,10 @@ namespace Katarina_By_Kornis
                         if (!en.IsDead &&
                             en.Distance(bestTarget) < Q.Range && en.Distance(Player) < E.Range)
                         {
-
+                            if (Player.HasBuff("katarinarsoudn"))
+                            {
+                                Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
+                            }
                             E.Cast(en.ServerPosition);
 
 
@@ -660,7 +681,7 @@ namespace Katarina_By_Kornis
                 {
                     if (target.Distance(Player) >= R.Range - 100 && target != null)
                     {
-                       
+                        Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
                         var dagger = ObjectManager.Get<Obj_AI_Base>()
                             .Where(a => a.Name == "HiddenMinion" && a.IsValid && !a.IsDead);
                         foreach (var daggers in GameObjects.AllGameObjects)
@@ -697,7 +718,7 @@ namespace Katarina_By_Kornis
                     if (Player.GetSpellDamage(target, SpellSlot.Q) + Player.GetSpellDamage(target, SpellSlot.E) >=
                         target.Health)
                     {
-
+                        Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
                         var dagger = ObjectManager.Get<Obj_AI_Base>()
                             .Where(a => a.Name == "HiddenMinion" && a.IsValid && !a.IsDead);
                         foreach (var daggers in GameObjects.AllGameObjects)
@@ -741,11 +762,6 @@ namespace Katarina_By_Kornis
                 }
             }
             if (!target.IsValidTarget())
-            {
-                return;
-            }
-            
-            if (Player.HasBuff("katarinarsound"))
             {
                 return;
             }
