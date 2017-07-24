@@ -77,6 +77,7 @@ namespace Katarina_By_Kornis
             var FarmMenu = new Menu("farming", "Farming");
             {
                 FarmMenu.Add(new MenuBool("useq", "Use Q to Farm"));
+                FarmMenu.Add(new MenuBool("lastq", "^- Only for Last Hit"));
                 FarmMenu.Add(new MenuBool("usew", "Use W to Farm"));
                 FarmMenu.Add(new MenuSlider("hitw", "^- if Hits", 3, 1, 6));
                 FarmMenu.Add(new MenuBool("usee", "Use E to Farm"));
@@ -377,9 +378,20 @@ namespace Katarina_By_Kornis
                 {
 
 
-                    if (minion.IsValidTarget(Q.Range) && minion != null)
+                    if (minion.IsValidTarget(Q.Range) && minion != null && !Menu["farming"]["lastq"].Enabled)
                     {
                         Q.CastOnUnit(minion);
+                    }
+                }
+            }
+            if (Menu["farming"]["lastq"].Enabled)
+            {
+                foreach (var minion in GetEnemyLaneMinionsTargetsInRange(Q.Range))
+                {
+                    if (minion.Health <= Player.GetSpellDamage(minion, SpellSlot.Q))
+                    {
+                        Q.CastOnUnit(minion);
+
                     }
                 }
             }
@@ -663,7 +675,7 @@ namespace Katarina_By_Kornis
             float hitR = Menu["combo"]["rset"]["rhit"].As<MenuSlider>().Value;
             float dagggggggers = Menu["combo"]["rset"]["dagger"].As<MenuSlider>().Value;
             float meow = Menu["combo"]["rset"]["waster"].As<MenuSlider>().Value;
-            var target = GetBestEnemyHeroTargetInRange(Q.Range);
+            var target = GetBestEnemyHeroTargetInRange(E.Range);
             if (cancel)
             {
                 if (Player.HasBuff("katarinarsound"))
