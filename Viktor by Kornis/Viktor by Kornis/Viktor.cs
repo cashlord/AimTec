@@ -748,7 +748,7 @@ namespace Viktor_By_Kornis
                         var output = Prediction.GetPrediction(pred);
                         if (output.HitChance >= HitChance.High)
                         {
-                            E.Cast(output.CastPosition.Extend(output.CastPosition, 100), startpos);
+                            E.Cast(output.CastPosition, startpos);
                         }
 
                     }
@@ -760,7 +760,7 @@ namespace Viktor_By_Kornis
                         var output = Prediction.GetPrediction(pred);
                         if (output.HitChance >= HitChance.High)
                         {
-                            E.Cast(output.UnitPosition.Extend(output.UnitPosition, 100), output.CastPosition);
+                            E.Cast(output.UnitPosition, output.CastPosition);
                         }
                     }
                 }

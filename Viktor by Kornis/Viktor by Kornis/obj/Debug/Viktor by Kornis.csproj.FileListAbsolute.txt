@@ -1,0 +1,10 @@
+C:\Users\Meow\Desktop\LeagueTec\Viktor by Kornis\Viktor by Kornis\bin\Debug\Viktor by Kornis.exe.config
+C:\Users\Meow\Desktop\LeagueTec\Viktor by Kornis\Viktor by Kornis\bin\Debug\Viktor by Kornis.exe
+C:\Users\Meow\Desktop\LeagueTec\Viktor by Kornis\Viktor by Kornis\bin\Debug\Viktor by Kornis.pdb
+C:\Users\Meow\Desktop\LeagueTec\Viktor by Kornis\Viktor by Kornis\bin\Debug\Aimtec.dll
+C:\Users\Meow\Desktop\LeagueTec\Viktor by Kornis\Viktor by Kornis\bin\Debug\Aimtec.SDK.dll
+C:\Users\Meow\Desktop\LeagueTec\Viktor by Kornis\Viktor by Kornis\bin\Debug\NLog.dll
+C:\Users\Meow\Desktop\LeagueTec\Viktor by Kornis\Viktor by Kornis\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Meow\Desktop\LeagueTec\Viktor by Kornis\Viktor by Kornis\obj\Debug\Viktor by Kornis.csprojResolveAssemblyReference.cache
+C:\Users\Meow\Desktop\LeagueTec\Viktor by Kornis\Viktor by Kornis\obj\Debug\Viktor by Kornis.exe
+C:\Users\Meow\Desktop\LeagueTec\Viktor by Kornis\Viktor by Kornis\obj\Debug\Viktor by Kornis.pdb
