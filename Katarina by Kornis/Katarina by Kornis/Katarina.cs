@@ -78,6 +78,7 @@ namespace Katarina_By_Kornis
             {
                 FarmMenu.Add(new MenuBool("useq", "Use Q to Farm"));
                 FarmMenu.Add(new MenuBool("lastq", "^- Only for Last Hit"));
+                FarmMenu.Add(new MenuBool("lastaa", "Don't Last Hit in AA Range"));
                 FarmMenu.Add(new MenuBool("usew", "Use W to Farm"));
                 FarmMenu.Add(new MenuSlider("hitw", "^- if Hits", 3, 1, 6));
                 FarmMenu.Add(new MenuBool("usee", "Use E to Farm"));
@@ -88,6 +89,7 @@ namespace Katarina_By_Kornis
             var LastMenu = new Menu("lasthit", "Last Hit");
             {
                 LastMenu.Add(new MenuBool("lastq", "Use Q to Last Hit"));
+                LastMenu.Add(new MenuBool("lastaa", "Don't Last Hit in AA Range"));
             }
             Menu.Add(LastMenu);
             var KSMenu = new Menu("killsteal", "Killsteal");
@@ -390,7 +392,17 @@ namespace Katarina_By_Kornis
                 {
                     if (minion.Health <= Player.GetSpellDamage(minion, SpellSlot.Q))
                     {
-                        Q.CastOnUnit(minion);
+                        if (Menu["farming"]["lastaa"].Enabled)
+                        {
+                            if (minion.Distance(Player) > 250)
+                            {
+                                Q.CastOnUnit(minion);
+                            }
+                        }
+                        if (!Menu["farming"]["lastaa"].Enabled)
+                        {
+                            Q.CastOnUnit(minion);
+                        }
 
                     }
                 }
@@ -494,7 +506,17 @@ namespace Katarina_By_Kornis
 
                     if (minion.Health <= Player.GetSpellDamage(minion, SpellSlot.Q))
                     {
-                        Q.CastOnUnit(minion);
+                        if (Menu["lasthit"]["lastaa"].Enabled)
+                        {
+                            if (minion.Distance(Player) > 250)
+                            {
+                                Q.CastOnUnit(minion);
+                            }
+                        }
+                        if (!Menu["lasthit"]["lastaa"].Enabled)
+                        {
+                            Q.CastOnUnit(minion);
+                        }
 
                     }
                 }
