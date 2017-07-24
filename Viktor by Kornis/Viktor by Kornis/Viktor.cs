@@ -51,7 +51,7 @@ namespace Viktor_By_Kornis
             var QSet = new Menu("qset", "Q Settings");
             {
                 QSet.Add(new MenuBool("useq", "Use Q in Combo"));
-                QSet.Add(new MenuBool("qaa", "^- Only for Q Resets(Waits for AA)", false));
+              //  QSet.Add(new MenuBool("qaa", "^- Only for Q Resets(Waits for AA)", false));
                 
             }
             var WSet = new Menu("wset", "W Settings");
@@ -147,7 +147,7 @@ namespace Viktor_By_Kornis
             Console.WriteLine("Viktor by Kornis - Loaded");
         }
 
-        private void Orbwalker_PreAttack(object sender, PreAttackEventArgs e)
+      /*  private void Orbwalker_PreAttack(object sender, PreAttackEventArgs e)
         {
             if (Orbwalker.Mode.Equals(OrbwalkingMode.Combo))
             {
@@ -171,7 +171,8 @@ namespace Viktor_By_Kornis
 
                 }
             }
-        }
+        }*/
+
             public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
             if (sender.IsMe)
