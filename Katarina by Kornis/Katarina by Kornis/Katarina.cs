@@ -713,7 +713,7 @@ namespace Katarina_By_Kornis
             {
                 if (Player.HasBuff("katarinarsound"))
                 {
-                    if (target.Distance(Player) >= R.Range - 100 && target != null)
+                    if (target.Distance(Player) >= R.Range - 100 && target != null && E.Ready)
                     {
                         Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
                         var dagger = ObjectManager.Get<Obj_AI_Base>()
@@ -752,14 +752,15 @@ namespace Katarina_By_Kornis
                     if (Player.GetSpellDamage(target, SpellSlot.Q) + Player.GetSpellDamage(target, SpellSlot.E) >=
                         target.Health)
                     {
-                        Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
+                        
                         var dagger = ObjectManager.Get<Obj_AI_Base>()
                             .Where(a => a.Name == "HiddenMinion" && a.IsValid && !a.IsDead);
                         foreach (var daggers in GameObjects.AllGameObjects)
 
                         {
-                            if (daggers.Name == "HiddenMinion" && !daggers.IsDead && daggers.IsValid)
+                            if (daggers.Name == "HiddenMinion" && !daggers.IsDead && daggers.IsValid && E.Ready)
                             {
+                                Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
                                 if (target.Distance(daggers) < 450 &&
                                     target.IsValidTarget(E.Range) && E.Ready)
 
@@ -779,14 +780,15 @@ namespace Katarina_By_Kornis
                                     E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
                                 }
                             }
-                            if (dagger.Count() == 0)
+                            if (dagger.Count() == 0 && E.Ready)
                             {
-
+                                Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
                                 E.Cast(target.ServerPosition.Extend(Player.ServerPosition, -50));
                             }
 
-                            if (target.IsValidTarget(Q.Range))
+                            if (target.IsValidTarget(Q.Range) && Q.Ready)
                             {
+                                Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
                                 Q.CastOnUnit(target);
                             }
 
