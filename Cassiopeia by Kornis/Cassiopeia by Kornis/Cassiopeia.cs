@@ -78,6 +78,8 @@ namespace Cassiopeia_By_Kornis
                 RSet.Add(new MenuList("rmode", "R Mode", new[] { "At X Health", "If Killable" }, 0));
                 RSet.Add(new MenuSlider("waster", "Don't waste R if Enemy HP lower than", 100, 0, 500));
                 RSet.Add(new MenuSlider("hpr", "R if Target has Health Percent", 60, 1, 100));
+                RSet.Add(new MenuSlider("hitr", "Min. Enemies to Hit", 1, 1, 5));
+                //RSet.Add(new MenuSlider("stunr", "Min. Enemies to Stun", 1, 1, 5));
                 RSet.Add(new MenuSlider("ranger", "R Range", 750, 125, 825));
                 RSet.Add(new MenuBool("facer", "Only R if Facing", false));
                 RSet.Add(new MenuKeyBind("key", "R Flash:", KeyCode.T, KeybindType.Press));
@@ -106,6 +108,7 @@ namespace Cassiopeia_By_Kornis
                 Pushing.Add(new MenuBool("useq", "Use Q to Farm"));
                 Pushing.Add(new MenuBool("usee", "Use E to Farm"));
                 Pushing.Add(new MenuBool("epoison", "^- Only if POISONED"));
+                Pushing.Add(new MenuBool("disable", "Disable AA"));
             }
             var Passive = new Menu("passive", "Passive");
             {
@@ -355,7 +358,22 @@ namespace Cassiopeia_By_Kornis
                     }
                 }
             }
-
+            if (Orbwalker.Mode.Equals(OrbwalkingMode.Lasthit))
+            {
+                if (E.Ready && Player.Mana > Player.SpellBook.GetSpell(SpellSlot.E).Cost)
+                {
+                    Orbwalker.AttackingEnabled = false;
+                }
+                else Orbwalker.AttackingEnabled = true;
+            }
+            if (Orbwalker.Mode.Equals(OrbwalkingMode.Laneclear))
+            {
+                if (Menu["farming"]["mode"].Enabled && Menu["farming"]["push"]["disable"].Enabled)
+                {
+                    Orbwalker.AttackingEnabled = false;
+                }
+                else Orbwalker.AttackingEnabled = true;
+            }
             if (Menu["misc"]["aakey"].Enabled)
             {
                 if (Player.Mana > 100 && Menu["misc"]["disable"].Enabled && Menu["misc"]["level"].As<MenuSlider>().Value <= Player.Level)
@@ -363,7 +381,7 @@ namespace Cassiopeia_By_Kornis
                     Orbwalker.AttackingEnabled = false;
                 }
             }
-            if (!Menu["misc"]["disable"].Enabled || Player.Mana < 100 || !Menu["misc"]["aakey"].Enabled)
+            if (!Menu["misc"]["disable"].Enabled || Player.Mana < 100 || !Menu["misc"]["aakey"].Enabled && (!Orbwalker.Mode.Equals(OrbwalkingMode.Lasthit) && !Menu["misc"]["aakey"].Enabled && !Orbwalker.Mode.Equals(OrbwalkingMode.Laneclear)))
             {
                 Orbwalker.AttackingEnabled = true;
             }
@@ -569,61 +587,21 @@ namespace Cassiopeia_By_Kornis
         {
             return TargetSelector.Implementation.GetOrderedTargets(spell.Range).FirstOrDefault(t => t.IsValidTarget());
         }
-        private static Vector3 empt;
-        private static Vector3 BestCastPosition(Spell spell, int targetHit, int radiusSpell)
+
+      
+        public Vector3 End = Vector3.Zero;
+        public static float GetAngleByDegrees(float degrees)
         {
-
-            var enemies = GameObjects.EnemyHeroes.Where(enemy => enemy != null & enemy.IsValidTarget(spell.Range));
-            int count = 0;
-            List<Obj_AI_Base> bestEnemies = new List<Obj_AI_Base>();
-            float Xs = 0;
-            float Zs = 0;
-            empt.X = 0;
-            empt.Y = 0;
-            empt.Z = 0;
-
-
-            foreach (var enemt in enemies)
-            {
-                count = 0;
-                foreach (var ene in enemies)
-                {
-
-                    if (enemt.Position.Distance(ene.Position) <= 2 * radiusSpell)
-                    {
-                        count += 1;
-                    }
-                    if (count >= targetHit)
-                    {
-                        bestEnemies.Add(enemt);
-                    }
-                }
-            }
-
-            if (bestEnemies.Count >= targetHit && bestEnemies.Count > 1)
-            {
-
-                for (int k = 0; k < bestEnemies.Count; k++)
-                {
-                    Xs += bestEnemies[k].Position.X;
-                    Zs += bestEnemies[k].Position.Z;
-                }
-                float avgX = Xs / bestEnemies.Count;
-                float avgZ = Zs / bestEnemies.Count;
-                Vector2 BestPosi;
-                BestPosi.X = avgX;
-                BestPosi.Y = avgZ;
-                if (BestPosi.Distance(Player.Position.To2D()) <= spell.Range)
-                {
-                    return BestPosi.To3D();
-                }
-                else
-                    return empt;
-            }
-            else
-                return empt;
+            return (float)(degrees * Math.PI / 180);
         }
-
+        public Geometry.Sector UltimateCone(Vector2 pos)
+        {
+            return new Geometry.Sector(
+                (Vector2)Player.Position.Extend(End, -Player.BoundingRadius),
+                pos,
+                GetAngleByDegrees(80f),
+                R.Range);
+        }
         private void Killsteal()
         {
             if (Q.Ready &&
@@ -657,61 +635,49 @@ namespace Cassiopeia_By_Kornis
                 if (bestTarget != null && Player.GetSpellDamage(bestTarget, SpellSlot.R) >= bestTarget.Health &&
                     bestTarget.IsValidTarget(Menu["combo"]["rset"]["ranger"].As<MenuSlider>().Value) && bestTarget.Health >= Menu["killsteal"]["waster"].As<MenuSlider>().Value)
                 {
-                    var hello = BestCastPosition(R, 1, (int)R.Width);
-                    if (hello != null)
+                    Geometry.Sector cone;
+                    foreach (var enemy in GetBestEnemyHeroesTargetsInRange(R.Range))
                     {
-                        if (Player.CountEnemyHeroesInRange(R.Range) == 1)
-                        {
-                            R.Cast(bestTarget);
-                        }
-                        if (Player.CountEnemyHeroesInRange(R.Range) > 1 && bestTarget.Distance(Player) < 200)
-                        {
-                            R.Cast(bestTarget);
-                        }
 
-                        if (Player.CountEnemyHeroesInRange(R.Range) > 1 && bestTarget.Distance(Player) > 200)
+                        cone = UltimateCone((Vector2)enemy.ServerPosition);
+                        if (GameObjects.EnemyHeroes.Count(t2 => t2.IsValidTarget() && cone.IsInside((Vector2)t2.ServerPosition)) >= Menu["combo"]["rset"]["hitr"].As<MenuSlider>().Value)
                         {
-                            R.Cast(hello);
+                            R.Cast(enemy);
                         }
-
-
                     }
                 }
             }
+            
 
 
+        }
+        
+        public static List<Obj_AI_Hero> GetBestEnemyHeroesTargets()
+        {
+            return GetBestEnemyHeroesTargetsInRange(float.MaxValue);
+        }
+
+        public static List<Obj_AI_Hero> GetBestEnemyHeroesTargetsInRange(float range)
+        {
+            return TargetSelector.Implementation.GetOrderedTargets(range);
         }
         private void SemiR()
         {
             if (R.Ready)
             {
-                var bestTarget = GetBestEnemyHeroTargetInRange(R.Range);
-                if (bestTarget != null &&
-                    bestTarget.IsValidTarget(Menu["combo"]["rset"]["ranger"].As<MenuSlider>().Value))
+                Geometry.Sector cone;
+                foreach (var enemy in GetBestEnemyHeroesTargetsInRange(R.Range))
                 {
-                    var hello = BestCastPosition(R, 1, (int)R.Width);
-                    if (hello != null)
+
+                    cone = UltimateCone((Vector2)enemy.ServerPosition);
+                    if (GameObjects.EnemyHeroes.Count(t2 => t2.IsValidTarget() && cone.IsInside((Vector2)t2.ServerPosition)) >= Menu["combo"]["rset"]["hitr"].As<MenuSlider>().Value)
                     {
-                        if (Player.CountEnemyHeroesInRange(R.Range) == 1)
-                        {
-
-                            R.Cast(bestTarget);
-                        }
-                        if (Player.CountEnemyHeroesInRange(R.Range) > 1 && bestTarget.Distance(Player) < 200)
-                        {
-                            R.Cast(bestTarget);
-                        }
-
-                        if (Player.CountEnemyHeroesInRange(R.Range) > 1 && bestTarget.Distance(Player) > 200)
-                        {
-                            R.Cast(hello);
-                        }
-
-
+                        R.Cast(enemy);  
                     }
                 }
             }
         }
+        
         public static Obj_AI_Hero GetBestEnemyHeroTarget()
         {
             return GetBestEnemyHeroTargetInRange(float.MaxValue);
@@ -779,48 +745,30 @@ namespace Cassiopeia_By_Kornis
                                 {
                                     if (target.IsFacing(Player))
                                     {
-                                        var hello = BestCastPosition(R, 1, (int)R.Width);
-                                        if (hello != null)
+                                        Geometry.Sector cone;
+                                        foreach (var enemy in GetBestEnemyHeroesTargetsInRange(R.Range))
                                         {
-                                            if (Player.CountEnemyHeroesInRange(R.Range) == 1)
-                                            {
-                                                R.Cast(target);
-                                            }
-                                            if (Player.CountEnemyHeroesInRange(R.Range) > 1 && target.Distance(Player) < 200)
-                                            {
-                                                R.Cast(target);
-                                            }
 
-                                            if (Player.CountEnemyHeroesInRange(R.Range) > 1 && target.Distance(Player) > 200)
+                                            cone = UltimateCone((Vector2)enemy.ServerPosition);
+                                            if (GameObjects.EnemyHeroes.Count(t2 => t2.IsValidTarget() && cone.IsInside((Vector2)t2.ServerPosition)) >= Menu["combo"]["rset"]["hitr"].As<MenuSlider>().Value)
                                             {
-                                                R.Cast(hello);
+                                                R.Cast(enemy);
                                             }
-
-
                                         }
                                     }
 
                                 }
                                 if (!Menu["combo"]["rset"]["facer"].Enabled)
                                 {
-                                    var hello = BestCastPosition(R, 1, (int)R.Width);
-                                    if (hello != null)
+                                    Geometry.Sector cone;
+                                    foreach (var enemy in GetBestEnemyHeroesTargetsInRange(R.Range))
                                     {
-                                        if (Player.CountEnemyHeroesInRange(R.Range) == 1)
-                                        {
-                                            R.Cast(target);
-                                        }
-                                        if (Player.CountEnemyHeroesInRange(R.Range) > 1 && target.Distance(Player) < 200)
-                                        {
-                                            R.Cast(target);
-                                        }
 
-                                        if (Player.CountEnemyHeroesInRange(R.Range) > 1 && target.Distance(Player) > 200)
+                                        cone = UltimateCone((Vector2)enemy.ServerPosition);
+                                        if (GameObjects.EnemyHeroes.Count(t2 => t2.IsValidTarget() && cone.IsInside((Vector2)t2.ServerPosition)) >= Menu["combo"]["rset"]["hitr"].As<MenuSlider>().Value)
                                         {
-                                            R.Cast(hello);
+                                            R.Cast(enemy);
                                         }
-
-
                                     }
                                 }
                             }
@@ -833,48 +781,30 @@ namespace Cassiopeia_By_Kornis
                                 {
                                     if (target.IsFacing(Player))
                                     {
-                                        var hello = BestCastPosition(R, 1, (int)R.Width);
-                                        if (hello != null)
+                                        Geometry.Sector cone;
+                                        foreach (var enemy in GetBestEnemyHeroesTargetsInRange(R.Range))
                                         {
-                                            if (Player.CountEnemyHeroesInRange(R.Range) == 1)
-                                            {
-                                                R.Cast(target);
-                                            }
-                                            if (Player.CountEnemyHeroesInRange(R.Range) > 1 && target.Distance(Player) < 200)
-                                            {
-                                                R.Cast(target);
-                                            }
 
-                                            if (Player.CountEnemyHeroesInRange(R.Range) > 1 && target.Distance(Player) > 200)
+                                            cone = UltimateCone((Vector2)enemy.ServerPosition);
+                                            if (GameObjects.EnemyHeroes.Count(t2 => t2.IsValidTarget() && cone.IsInside((Vector2)t2.ServerPosition)) >= Menu["combo"]["rset"]["hitr"].As<MenuSlider>().Value)
                                             {
-                                                R.Cast(hello);
+                                                R.Cast(enemy);
                                             }
-
-
                                         }
                                     }
 
                                 }
                                 if (!Menu["combo"]["rset"]["facer"].Enabled)
                                 {
-                                    var hello = BestCastPosition(R, 1, (int)R.Width);
-                                    if (hello != null)
+                                    Geometry.Sector cone;
+                                    foreach (var enemy in GetBestEnemyHeroesTargetsInRange(R.Range))
                                     {
-                                        if (Player.CountEnemyHeroesInRange(R.Range) == 1)
-                                        {
-                                            R.Cast(target);
-                                        }
-                                        if (Player.CountEnemyHeroesInRange(R.Range) > 1 && target.Distance(Player) < 200)
-                                        {
-                                            R.Cast(target);
-                                        }
 
-                                        if (Player.CountEnemyHeroesInRange(R.Range) > 1 && target.Distance(Player) > 200)
+                                        cone = UltimateCone((Vector2)enemy.ServerPosition);
+                                        if (GameObjects.EnemyHeroes.Count(t2 => t2.IsValidTarget() && cone.IsInside((Vector2)t2.ServerPosition)) >= Menu["combo"]["rset"]["hitr"].As<MenuSlider>().Value)
                                         {
-                                            R.Cast(hello);
+                                            R.Cast(enemy);
                                         }
-
-
                                     }
                                 }
                             }

@@ -1,0 +1,9 @@
+C:\Users\Meow\Desktop\LeagueTec\Cassiopeia by Kornis\Cassiopeia by Kornis\bin\Debug\Cassiopeia by Kornis.exe.config
+C:\Users\Meow\Desktop\LeagueTec\Cassiopeia by Kornis\Cassiopeia by Kornis\bin\Debug\Cassiopeia by Kornis.exe
+C:\Users\Meow\Desktop\LeagueTec\Cassiopeia by Kornis\Cassiopeia by Kornis\bin\Debug\Cassiopeia by Kornis.pdb
+C:\Users\Meow\Desktop\LeagueTec\Cassiopeia by Kornis\Cassiopeia by Kornis\bin\Debug\Aimtec.dll
+C:\Users\Meow\Desktop\LeagueTec\Cassiopeia by Kornis\Cassiopeia by Kornis\bin\Debug\Aimtec.SDK.dll
+C:\Users\Meow\Desktop\LeagueTec\Cassiopeia by Kornis\Cassiopeia by Kornis\bin\Debug\NLog.dll
+C:\Users\Meow\Desktop\LeagueTec\Cassiopeia by Kornis\Cassiopeia by Kornis\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Meow\Desktop\LeagueTec\Cassiopeia by Kornis\Cassiopeia by Kornis\obj\Debug\Cassiopeia by Kornis.exe
+C:\Users\Meow\Desktop\LeagueTec\Cassiopeia by Kornis\Cassiopeia by Kornis\obj\Debug\Cassiopeia by Kornis.pdb
